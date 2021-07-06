@@ -75,13 +75,30 @@ func Debug(f interface{}, v ...interface{})  {
 	realfmt.Printf("\033[1;31;33m %s\033[0m\n",formatLog(f, v...))
 }
 
+func Printf(f string, a ...interface{}) (n int, err error)  {
+	return realfmt.Printf(f,a...)
+}
+
+func Print( a ...interface{}) (n int, err error)  {
+	return realfmt.Print(a...)
+}
+
 func Sprintf(f interface{}, v ...interface{}) string {
 	return realfmt.Sprintf(formatLog(f, v...))
+}
+
+func Errorf(s string,f ...interface{}) (error) {
+	return realfmt.Errorf(s,f)
 }
 
 func Scanln(f interface{}) (int,error) {
 	return realfmt.Scanln(f)
 }
-func Errorf(s string,f ...interface{}) (error) {
-	return realfmt.Errorf(s,f)
+
+func Scanf(f string, a ...interface{}) (int,error) {
+	return realfmt.Scanf(f,a...)
+}
+
+func Scan(a ...interface{}) (int,error) {
+	return realfmt.Scan(a...)
 }
