@@ -75,8 +75,8 @@ func Debug(f interface{}, v ...interface{})  {
 	realfmt.Printf("\033[1;31;33m %s\033[0m\n",formatLog(f, v...))
 }
 
-func Printf(f string, a ...interface{}) (n int, err error)  {
-	return realfmt.Printf(f,a...)
+func Printf(format string, a ...interface{}) (n int, err error)  {
+	return realfmt.Printf( format, a...)
 }
 
 func Print( a ...interface{}) (n int, err error)  {
