@@ -36,6 +36,8 @@ func Println(fp interface{}, vp ...interface{})  {
 	var v []interface{}
 	if b,ok:=fp.(string);ok{
 		f=b
+	}else if e,ok:=fp.(error);ok{
+		f=e.Error()
 	}else{
 		bb,_:=json.Marshal(fp)
 		f=string(bb)
