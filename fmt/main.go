@@ -86,7 +86,7 @@ func Print( a ...interface{}) (n int, err error)  {
 }
 
 func Sprintf(f interface{}, v ...interface{}) string {
-	return realfmt.Sprintf(f.(string),v)
+	return realfmt.Sprintf(f.(string),v...)
 }
 
 func Errorf(s string,f ...interface{}) (error) {
