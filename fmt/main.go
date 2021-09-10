@@ -3,6 +3,7 @@ package fmt
 import (
 	"encoding/json"
 	realfmt "fmt"
+	"reflect"
 	"runtime"
 	"strings"
 )
@@ -34,22 +35,20 @@ func formatLog(f interface{}, v ...interface{}) string {
 func Println(fp interface{}, vp ...interface{})  {
 	var f interface{}
 	var v []interface{}
-	if b,ok:=fp.(string);ok{
-		f=b
-	}else if e,ok:=fp.(error);ok{
-		f=e.Error()
-	}else{
+	if reflect.TypeOf(fp).Kind() == reflect.Struct {
 		bb,_:=json.Marshal(fp)
 		f=string(bb)
+	}else{
+		f=fp
 	}
 
 
 	for _, item:= range vp{
-		if b,ok:=item.(string);ok{
-			v=append(v,b)
-		}else{
+		if reflect.TypeOf(item).Kind() == reflect.Struct {
 			bb,_:=json.Marshal(item)
-			v=append(v,string(bb))
+			v=append(v, string(bb))
+		}else{
+			v=append(v, item)
 		}
 	}
 
@@ -90,7 +89,7 @@ func Sprintf(f interface{}, v ...interface{}) string {
 }
 
 func Errorf(s string,f ...interface{}) (error) {
-	return realfmt.Errorf(s,f)
+	return realfmt.Errorf(s,f...)
 }
 
 func Scanln(f interface{}) (int,error) {
