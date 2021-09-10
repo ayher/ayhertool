@@ -46,7 +46,6 @@ func Println(fp interface{}, vp ...interface{})  {
 
 	for _, item:= range vp{
 		var vpisjson=reflect.TypeOf(item).Kind() == reflect.Struct || reflect.TypeOf(item).Kind() == reflect.Map || reflect.TypeOf(item).Kind() == reflect.Slice
-		realfmt.Println(reflect.TypeOf(item).Kind())
 		if vpisjson {
 			bb,_:=json.Marshal(item)
 			v=append(v, string(bb))
