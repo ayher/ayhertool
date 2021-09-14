@@ -35,16 +35,23 @@ func formatLog(f interface{}, v ...interface{}) string {
 func Println(fp interface{}, vp ...interface{})  {
 	var f interface{}
 	var v []interface{}
-	var fpisjson=reflect.TypeOf(fp).Kind() == reflect.Struct || reflect.TypeOf(fp).Kind() == reflect.Map || reflect.TypeOf(fp).Kind() == reflect.Slice
-	if fpisjson {
-		bb,_:=json.Marshal(fp)
-		f=string(bb)
-	}else{
+	if fp==nil{
 		f=fp
+	}else{
+		var fpisjson=reflect.TypeOf(fp).Kind() == reflect.Struct || reflect.TypeOf(fp).Kind() == reflect.Map || reflect.TypeOf(fp).Kind() == reflect.Slice
+		if fpisjson {
+			bb,_:=json.Marshal(fp)
+			f=string(bb)
+		}else{
+			f=fp
+		}
 	}
 
-
 	for _, item:= range vp{
+		if item==nil{
+			v=append(v, item)
+			continue
+		}
 		var vpisjson=reflect.TypeOf(item).Kind() == reflect.Struct || reflect.TypeOf(item).Kind() == reflect.Map || reflect.TypeOf(item).Kind() == reflect.Slice
 		if vpisjson {
 			bb,_:=json.Marshal(item)
