@@ -26,12 +26,12 @@ func GetMap(url string) (map[string]interface{},error) {
 	return data,nil
 }
 
-func PostMap(url string,req map[string]interface{})(map[string]interface{},error){
+func PostMap(url string,req interface{})(map[string]interface{},error){
 	b,err:=json.Marshal(req)
 	if err!=nil{
 		return nil,err
 	}
-	resp, err:=http.Post(url,"",strings.NewReader(string(b)))
+	resp, err:=http.Post(url,"application/json",strings.NewReader(string(b)))
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
