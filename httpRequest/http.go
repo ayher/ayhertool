@@ -70,7 +70,7 @@ func (self *HttpRequest)postMap(url string,req interface{})(map[string]interface
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		// handle error
+		return nil, err
 	}
 
 	var data map[string]interface{}
