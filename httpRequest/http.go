@@ -42,9 +42,16 @@ func (self *HttpRequest)getMap(url string) (map[string]interface{},error) {
 		return nil, err
 	}
 
-	defer resp.Body.Close()
+	defer func() {
+		if resp!=nil && resp.Body!=nil{
+			resp.Body.Close()
+		}
+	}()
 
 	body, err := ioutil.ReadAll(resp.Body)
+	if err!=nil{
+		return nil,err
+	}
 
 	var data map[string]interface{}
 	err=json.Unmarshal(body,&data)
@@ -67,7 +74,14 @@ func (self *HttpRequest)postMap(url string,req interface{})(map[string]interface
 	client:=&http.Client{}
 	client.Transport=self.Transport
 	resp, err:=client.Post(url,"application/json",strings.NewReader(string(b)))
-	defer resp.Body.Close()
+	if err!=nil{
+		return nil,err
+	}
+	defer func() {
+		if resp!=nil && resp.Body!=nil{
+			resp.Body.Close()
+		}
+	}()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return nil, err
